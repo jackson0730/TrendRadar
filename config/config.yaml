@@ -59,24 +59,26 @@ platforms:
       name: "今日头条"
     - id: "baidu"
       name: "百度热搜"
+    - id: "weibo"
+      name: "微博热搜"
     - id: "wallstreetcn-hot"
       name: "华尔街见闻"
+    - id: "zhihu"
+      name: "知乎热榜"
+    - id: "36kr"
+      name: "36氪"
+    - id: "cls-hot"
+      name: "财联社"
     - id: "thepaper"
       name: "澎湃新闻"
     - id: "bilibili-hot-search"
       name: "bilibili 热搜"
-    - id: "cls-hot"
-      name: "财联社热门"
     - id: "ifeng"
       name: "凤凰网"
     - id: "tieba"
       name: "贴吧"
-    - id: "weibo"
-      name: "微博"
     - id: "douyin"
       name: "抖音"
-    - id: "zhihu"
-      name: "知乎"
 
 
 
@@ -151,7 +153,7 @@ rss:
 # - incremental：最少打扰，只看新增
 # ===============================================================
 report:
-  mode: "current"                     # daily | current | incremental（schedule 开启时作为默认值）
+  mode: "incremental"                 # daily | current | incremental（schedule 开启时作为默认值）
 
   display_mode: "keyword"             # 分组维度: keyword | platform
                                       # keyword: 按关键词分组显示（默认）
@@ -160,7 +162,7 @@ report:
   # 关键词模式分组排序方式（仅 keyword 模式生效）
   # true: 按 frequency_words.txt 的定义顺序排列
   # false: 按匹配到的热点条数排序（条数多的在前）
-  sort_by_position_first: false
+  sort_by_position_first: true
 
   rank_threshold: 5                   # 排名高亮阈值（影响展示强调，不改变抓取范围）
 
@@ -178,7 +180,7 @@ report:
 # 5) 这里决定“筛选路径”，不决定 AI 模型（模型在 ai 段）
 # ===============================================================
 filter:
-  method: "ai"                     # 可选: keyword | ai
+  method: "keyword"                  # 可选: keyword | ai
 
   # AI 模式标签排序开关（仅 ai 模式生效）
   # true: 按标签优先级排序（来自兴趣描述提取顺序）
@@ -316,7 +318,7 @@ notification:
   # 推送渠道配置
   channels:
     feishu:
-      webhook_url: ""                 # 飞书机器人 webhook URL
+      webhook_url: ""                 # 飞书机器人 webhook URL（通过 GitHub Secret FEISHU_WEBHOOK_URL 注入）
 
     dingtalk:
       webhook_url: ""                 # 钉钉机器人 webhook URL
@@ -468,7 +470,7 @@ ai:
 # 模型配置见上方 ai 配置段
 # ===============================================================
 ai_analysis:
-  enabled: true                     # 是否启用 AI 分析（总开关）
+  enabled: false                    # 是否启用 AI 分析（总开关）
                                     # ⚠️ 开启调度系统后，此项仍为总开关：
                                     #   false → 永远不分析（无论调度怎么设置）
                                     #   true  → 由调度的 analyze 字段控制何时分析
